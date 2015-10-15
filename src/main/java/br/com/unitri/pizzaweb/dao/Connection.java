@@ -1,4 +1,4 @@
-package br.com.unitri.dao;
+package br.com.unitri.pizzaweb.dao;
 
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;

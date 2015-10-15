@@ -1,4 +1,4 @@
-package br.com.unitri.entity;
+package br.com.unitri.pizzaweb.entity;
 
 import java.io.Serializable;
 import javax.persistence.*;

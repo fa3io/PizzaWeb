@@ -1,4 +1,4 @@
-package br.com.unitri.entity;
+package br.com.unitri.pizzaweb.entity;
 
 import java.io.Serializable;
 import javax.persistence.*;
@@ -16,7 +16,7 @@ public class Cliente implements Serializable {
 
 	@Id
 	@GeneratedValue(strategy=GenerationType.IDENTITY)
-	private int id;
+	private Integer id;
 
 	private String endereco;
 
@@ -33,11 +33,11 @@ public class Cliente implements Serializable {
 	public Cliente() {
 	}
 
-	public int getId() {
+	public Integer getId() {
 		return this.id;
 	}
 
-	public void setId(int id) {
+	public void setId(Integer id) {
 		this.id = id;
 	}
 

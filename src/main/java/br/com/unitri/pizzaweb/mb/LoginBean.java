@@ -1,4 +1,4 @@
-package br.com.unitri.mb;
+package br.com.unitri.pizzaweb.mb;
 
 import java.io.IOException;
 import java.io.Serializable;

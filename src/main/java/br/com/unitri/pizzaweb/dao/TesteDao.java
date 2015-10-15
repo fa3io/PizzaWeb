@@ -1,8 +1,8 @@
-package br.com.unitri.dao;
+package br.com.unitri.pizzaweb.dao;
 
 import java.util.List;
 
-import br.com.unitri.entity.Cliente;
+import br.com.unitri.pizzaweb.entity.Cliente;
 
 public class TesteDao {
 

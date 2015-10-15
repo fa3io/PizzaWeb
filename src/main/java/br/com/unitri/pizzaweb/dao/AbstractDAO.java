@@ -1,4 +1,4 @@
-package br.com.unitri.dao;
+package br.com.unitri.pizzaweb.dao;
 
 import java.io.Serializable;
 import java.util.List;

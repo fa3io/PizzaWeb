@@ -5,8 +5,7 @@
 <h:head>
 	<title>Vitrini de Pizzas</title>
 	<link href="css/bootstrap.min.css" rel="stylesheet" />
-	<script
-		src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js" />
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js" />
 	<script src="js/bootstrap.min.js" />
 	<link href="css/shop-homepage.css" rel="stylesheet" />
 </h:head>
@@ -87,7 +86,7 @@
 				<p:dataList value="#{menuBean.pizzas}" var="pizza" itemType="none" type="none">
 					<div class="col-sm-4 col-lg-4 col-md-4">
 						<div class="thumbnail">
-							<h:graphicImage  url="#{pizza.imagem}" alt="#{pizza.nome}"/>
+							<h:graphicImage  url="img/#{pizza.imagem}" alt="#{pizza.nome}"/>
 							<div class="caption">
 								<h4 class="pull-right">#{pizza.valor}</h4>
 								<h4>

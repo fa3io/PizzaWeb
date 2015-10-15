@@ -5,10 +5,10 @@
 	<persistence-unit name="PizzaWeb">
 		<provider>org.hibernate.ejb.HibernatePersistence</provider>
 
-		<class>br.com.unitri.entity.Cliente</class>
-		<class>br.com.unitri.entity.Ingrediente</class>
-		<class>br.com.unitri.entity.Pedido</class>
-		<class>br.com.unitri.entity.Pizza</class>
+		<class>br.com.unitri.pizzaweb.entity.Cliente</class>
+		<class>br.com.unitri.pizzaweb.entity.Ingrediente</class>
+		<class>br.com.unitri.pizzaweb.entity.Pedido</class>
+		<class>br.com.unitri.pizzaweb.entity.Pizza</class>
 
 		<properties>
 			<property name="hibernate.dialect" value="org.hibernate.dialect.MySQL5InnoDBDialect" />
