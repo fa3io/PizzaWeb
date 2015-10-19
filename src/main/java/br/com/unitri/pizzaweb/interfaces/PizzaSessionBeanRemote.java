@@ -2,6 +2,7 @@ package br.com.unitri.pizzaweb.interfaces;
 
 import javax.ejb.Remote;
 
+import br.com.unitri.pizzaweb.entity.Pedido;
 import br.com.unitri.pizzaweb.entity.Pizza;
 
 @Remote
@@ -15,7 +16,7 @@ public interface PizzaSessionBeanRemote {
 	 
 	 void buscarPorId(Pizza id);
 	 
-	 void solicitrPedido(String pedido);
+	 void solicitrPedido(Pedido pedido);
 	 
 	 
 	    	

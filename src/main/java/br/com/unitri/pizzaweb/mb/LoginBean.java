@@ -9,8 +9,9 @@ import javax.faces.bean.ManagedBean;
 import javax.faces.context.FacesContext;
 
 
-@ManagedBean
+
 @RequestScoped
+@ManagedBean
 public class LoginBean implements Serializable {
 	
 	private static final long serialVersionUID = 1L;
