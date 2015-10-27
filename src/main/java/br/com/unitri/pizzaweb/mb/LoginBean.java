@@ -1,26 +1,35 @@
 package br.com.unitri.pizzaweb.mb;
 
-import java.io.IOException;
 import java.io.Serializable;
 
 import javax.enterprise.context.RequestScoped;
 import javax.faces.application.FacesMessage;
-import javax.faces.bean.ManagedBean;
 import javax.faces.context.FacesContext;
+import javax.inject.Inject;
+import javax.inject.Named;
+import javax.servlet.http.HttpSession;
+
+import br.com.unitri.pizzaweb.dao.ClienteDAO;
+import br.com.unitri.pizzaweb.entity.Cliente;
 
 
 
 @RequestScoped
-@ManagedBean
+@Named
 public class LoginBean implements Serializable {
 	
 	private static final long serialVersionUID = 1L;
 	private String usuario = "";
 	private String senha = "";
 	
+	Cliente usuariologin = new Cliente();
+	
+	@Inject
+	ClienteDAO clienteDAO;
+	
 	public LoginBean() {
 	}
-	
+	/*
 	public void logar(){
 		try {
 			if(usuario.equals("fabio") && senha.equals("123")){
@@ -33,6 +42,20 @@ public class LoginBean implements Serializable {
 			FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "Erro ao efetuar login", "Erro"));
 		}
 	}
+	*/
+	public String logar(){
+		Cliente cliente  = clienteDAO.getByLogin(usuario, senha);
+		if(cliente != null){
+			FacesContext fc = FacesContext.getCurrentInstance();
+			HttpSession session = (HttpSession) fc.getExternalContext().getSession(false);
+			session.setAttribute("cliente", cliente);
+			return "menu.jsf"; 
+		}else{
+			FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_WARN, "Usuario ou senha Invalido", "Erro"));
+		}
+		return null;
+	}
+	
 	/**
 	 * @return the usuario
 	 */
@@ -57,4 +80,20 @@ public class LoginBean implements Serializable {
 	public void setSenha(String senha) {
 		this.senha = senha;
 	}
+
+	/**
+	 * @return the usuariologin
+	 */
+	public Cliente getUsuariologin() {
+		return usuariologin;
+	}
+
+	/**
+	 * @param usuariologin the usuariologin to set
+	 */
+	public void setUsuariologin(Cliente usuariologin) {
+		this.usuariologin = usuariologin;
+	}
+	
+	
 }

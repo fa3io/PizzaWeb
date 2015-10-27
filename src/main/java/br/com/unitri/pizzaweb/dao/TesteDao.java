@@ -12,10 +12,10 @@ public class TesteDao {
 		
 		Cliente cliente = new Cliente();
 		
-		cliente.setNome("Flavio Santos Alves");
+		cliente.setNome("Fábio Santos Alves");
 		cliente.setEndereco("Rua Chipre 164");
-		cliente.setUsuario("flavio");
-		cliente.setSenha("456");
+		cliente.setUsuario("fabio");
+		cliente.setSenha("254690");
 		
 		dao.persist(cliente);
 		//dao.update(cliente);

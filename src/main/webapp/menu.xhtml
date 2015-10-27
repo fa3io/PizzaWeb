@@ -1,7 +1,9 @@
 <html xmlns="http://www.w3.org/1999/xhtml"
 	xmlns:h="http://xmlns.jcp.org/jsf/html"
 	xmlns:pt="http://xmlns.jcp.org/jsf/passthrough"
-	xmlns:p="http://primefaces.org/ui">
+	xmlns:p="http://primefaces.org/ui"
+      
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
 <h:head>
 	<title>Vitrini de Pizzas</title>
 	<link href="css/bootstrap.min.css" rel="stylesheet" />
@@ -83,12 +85,19 @@
 					</div>
 				</div>
 				<div class="row">
-				<p:dataList value="#{menuBean.pizzas}" var="pizza" itemType="none" type="none">
+				<p:dataList value="#{menuBean.pizzas}" var="pizza" itemType="none" type="none" rowIndexVar="indice">
 					<div class="col-sm-4 col-lg-4 col-md-4">
 						<div class="thumbnail">
 							<h:graphicImage  url="img/#{pizza.imagem}" alt="#{pizza.nome}"/>
 							<div class="caption">
-								<h4 class="pull-right">#{pizza.valor}</h4>
+								<h4>
+								
+								<p:outputLabel styleClass="pull-right" value="#{pizza.valor}">
+							 		<f:convertNumber pattern="##0.00"/>
+								</p:outputLabel>
+								<p:outputLabel styleClass="pull-right" value="R$" />
+								</h4>
+								
 								<h4>
 									<a href="#">#{pizza.nome}</a>
 								</h4>
@@ -96,7 +105,7 @@
 									#{pizza.descricao}
 								</p>
 							</div>
-							<h:commandButton style=" margin: 2%;" styleClass="btn btn-primary" value="Pedir" action="#{menuBean.selecionar(pizza.id)}" />
+							<h:commandButton style=" margin: 2%;" styleClass="btn btn-primary" value="Pedir" action="#{menuBean.selecionar(indice)}" />
 						</div>
 					</div>
 					</p:dataList>

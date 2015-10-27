@@ -13,7 +13,7 @@ public interface ClienteSessionBeanRemote {
 	
 	 void deletar(Cliente cliente);
 	 
-	 void buscarPorId(Integer id);
+	 Cliente buscarPorId(Integer id);
 	
 	
 	

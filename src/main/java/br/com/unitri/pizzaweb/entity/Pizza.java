@@ -103,8 +103,18 @@ public class Pizza implements Serializable {
 
 		return pedido;
 	}
+	
+	
 
 	
+	/* (non-Javadoc)
+	 * @see java.lang.Object#toString()
+	 */
+	@Override
+	public String toString() {
+		return "Pizza [id=" + id + ", descricao=" + descricao + ", nome=" + nome + ", valor=" + valor + "]";
+	}
+
 	@Override
 	public int hashCode() {
 		final int prime = 31;

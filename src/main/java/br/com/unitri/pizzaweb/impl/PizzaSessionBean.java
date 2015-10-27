@@ -1,15 +1,11 @@
 package br.com.unitri.pizzaweb.impl;
 
-import javax.annotation.Resource;
+import java.util.List;
+
 import javax.ejb.Stateless;
 import javax.inject.Inject;
-import javax.jms.JMSContext;
-import javax.jms.Queue;
 
-import com.fasterxml.jackson.core.JsonProcessingException;
-import com.fasterxml.jackson.databind.ObjectMapper;
-
-import br.com.unitri.pizzaweb.entity.Pedido;
+import br.com.unitri.pizzaweb.dao.PizzaDAO;
 import br.com.unitri.pizzaweb.entity.Pizza;
 import br.com.unitri.pizzaweb.interfaces.PizzaSessionBeanRemote;
 
@@ -19,54 +15,35 @@ import br.com.unitri.pizzaweb.interfaces.PizzaSessionBeanRemote;
 @Stateless
 public class PizzaSessionBean implements PizzaSessionBeanRemote {
 
-	@Resource(mappedName = "jms/queue/pizza") 
-	private Queue Pizzaqueue;
-	
 	@Inject
-	JMSContext context;
-	
-	ObjectMapper mapper;
-	
-	
-	
-    public PizzaSessionBean() {
-    }
-    
-    @Override
-    public void solicitrPedido(Pedido pedido){
-    	String PedidoJson = "";
-    	mapper = new ObjectMapper();
-		try {
-			PedidoJson = mapper.writeValueAsString(pedido);
-			System.out.println(PedidoJson);
-			context.createProducer().send(Pizzaqueue, PedidoJson);
-		} catch (JsonProcessingException e) {
-			
-		}
-    	
-    }
+	PizzaDAO pizzaDAO;
+
+	public PizzaSessionBean() {
+	}
 
 	@Override
 	public void salvar(Pizza pizza) {
-		// TODO Auto-generated method stub
-		
+		pizzaDAO.persist(pizza);
 	}
 
 	@Override
 	public void atualizar(Pizza pizza) {
-		// TODO Auto-generated method stub
-		
+		pizzaDAO.update(pizza);
 	}
 
 	@Override
 	public void deletar(Pizza pizza) {
-		// TODO Auto-generated method stub
-		
+		pizzaDAO.remove(pizza);
 	}
 
 	@Override
-	public void buscarPorId(Pizza id) {
-		// TODO Auto-generated method stub
-		
+	public Pizza buscarPorId(Integer id) {
+		return pizzaDAO.getById(Pizza.class, id);
 	}
+
+	@Override
+	public List<Pizza> getAll() {
+		return pizzaDAO.getAll(Pizza.class);
+	}
+
 }

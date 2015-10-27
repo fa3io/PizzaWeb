@@ -1,8 +1,9 @@
 package br.com.unitri.pizzaweb.interfaces;
 
+import java.util.List;
+
 import javax.ejb.Remote;
 
-import br.com.unitri.pizzaweb.entity.Pedido;
 import br.com.unitri.pizzaweb.entity.Pizza;
 
 @Remote
@@ -14,11 +15,7 @@ public interface PizzaSessionBeanRemote {
 	
 	 void deletar(Pizza pizza);
 	 
-	 void buscarPorId(Pizza id);
+	 Pizza buscarPorId(Integer id);
 	 
-	 void solicitrPedido(Pedido pedido);
-	 
-	 
-	    	
-
+	 List<Pizza> getAll();
 }

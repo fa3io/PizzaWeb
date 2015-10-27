@@ -6,6 +6,11 @@ id="WebApp_ID" version="3.1">
   
   <display-name>Pizza Web</display-name>
   
+   <context-param>
+  <param-name>javax.faces.CONFIG_FILES</param-name>
+  <param-value>/WEB-INF/faces-config.xml</param-value>
+ </context-param>
+  
   <welcome-file-list>
     <welcome-file>login.jsf</welcome-file>
   </welcome-file-list>

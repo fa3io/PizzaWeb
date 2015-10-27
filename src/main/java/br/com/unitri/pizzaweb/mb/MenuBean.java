@@ -1,40 +1,48 @@
 package br.com.unitri.pizzaweb.mb;
 
 import java.io.Serializable;
-import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.annotation.PostConstruct;
 import javax.ejb.EJB;
 import javax.enterprise.context.SessionScoped;
-import javax.faces.bean.ManagedBean;
-import javax.inject.Inject;
+import javax.faces.context.FacesContext;
+import javax.inject.Named;
+import javax.servlet.http.HttpSession;
 
 import br.com.unitri.pizzaweb.entity.Cliente;
 import br.com.unitri.pizzaweb.entity.Ingrediente;
 import br.com.unitri.pizzaweb.entity.Pedido;
 import br.com.unitri.pizzaweb.entity.Pizza;
+import br.com.unitri.pizzaweb.impl.PizzaJMS;
 import br.com.unitri.pizzaweb.interfaces.PizzaSessionBeanRemote;
 
-@ManagedBean
 @SessionScoped
+@Named
 public class MenuBean implements Serializable {
 
 	private static final long serialVersionUID = 1L;
-	private List<Pizza> pizzas;
-	private Pizza pizza = new Pizza();
-	Cliente cliente = new Cliente();
+
+	List<Pizza> pizzas = new ArrayList<>();
+	Pizza pizza = new Pizza();
+	List<String> ingredientesSelecionados = new ArrayList<>();
 	List<Ingrediente> ingredientes = new ArrayList<>();
 
 	@EJB
-	PizzaSessionBeanRemote pizzaSession;
+	private PizzaSessionBeanRemote pizzaSession;
 
-	@Inject
-	Pedido pedido;
+	PizzaJMS pizzaJMS = new PizzaJMS();
+
+	private Pedido pedido;
 
 	public MenuBean() {
-		carregarPizzas();
 
+	}
+
+	@PostConstruct
+	public void init() {
+		carregarPizzas();
 	}
 
 	public String selecionar(Integer codigo) {
@@ -43,34 +51,37 @@ public class MenuBean implements Serializable {
 	}
 
 	public void pedir() {
+		Cliente cliente = getUsuarioSessao();
 		pedido = montarPedido(pizza, cliente, ingredientes);
-		pizzaSession.solicitrPedido(pedido);
+		pizzaJMS.solicitrPedido(pedido);
 	}
 
-	private Pedido montarPedido(Pizza pizza2, Cliente cliente2, List<Ingrediente> ingredientes2) {
+	private Pedido montarPedido(Pizza pizza, Cliente cliente, List<Ingrediente> ingredientes) {
+		Pedido pedido = new Pedido();
+		pedido.setCliente(cliente);
+		pedido.setPizza(pizza);
+		pedido.setIngredientes(ingredientes);
+		return pedido;
+	}
 
-		return null;
+	private Cliente getUsuarioSessao() {
+		Cliente cliente = null;
+
+		FacesContext fc = FacesContext.getCurrentInstance();
+		HttpSession session = (HttpSession) fc.getExternalContext().getSession(false);
+		cliente = (Cliente) session.getAttribute("cliente");
+		
+		return cliente;
 	}
 
 	private void carregarPizzas() {
-		pizzas = new ArrayList<>();
-
-		pizzas.add(new Pizza(1, "calabresa.jpg", "Calabresa", "Pizza de Calabresa ", new BigDecimal("40.00")));
-		pizzas.add(new Pizza(2, "mussarela.jpg", "Mussarela", "Pizza de Mussarela ", new BigDecimal("35.00")));
-		pizzas.add(new Pizza(3, "portuguesa.jpg", "Portuguesa", "Pizza de Portuguesa ", new BigDecimal("50.00")));
+		pizzas.addAll(pizzaSession.getAll());
 	}
 
-	/**
-	 * @return the pizzas
-	 */
 	public List<Pizza> getPizzas() {
 		return pizzas;
 	}
 
-	/**
-	 * @param pizzas
-	 *            the pizzas to set
-	 */
 	public void setPizzas(List<Pizza> pizzas) {
 		this.pizzas = pizzas;
 	}
@@ -81,5 +92,13 @@ public class MenuBean implements Serializable {
 
 	public void setPizza(Pizza pizza) {
 		this.pizza = pizza;
+	}
+
+	public List<String> getIngredientesSelecionados() {
+		return ingredientesSelecionados;
+	}
+
+	public void setIngredientesSelecionados(List<String> ingredientesSelecionados) {
+		this.ingredientesSelecionados = ingredientesSelecionados;
 	}
 }
