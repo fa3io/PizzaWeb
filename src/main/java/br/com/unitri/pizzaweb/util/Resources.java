@@ -8,6 +8,6 @@ import javax.persistence.PersistenceContext;
 public class Resources {
 
 	@Produces
-	@PersistenceContext
+	@PersistenceContext(unitName="PizzaWeb")
 	private EntityManager manager;
 }
