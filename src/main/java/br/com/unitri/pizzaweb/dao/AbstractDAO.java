@@ -15,30 +15,20 @@ public abstract class AbstractDAO<T, I extends Serializable> implements DAO<T, I
 	@Override
 	public T persist(T entity) {
 		T saved = null;
-
-		manager.getTransaction().begin();
 		saved = manager.merge(entity);
-		manager.getTransaction().commit();
-
 		return saved;
 	}
 
 	@Override
 	public T update(T entity) {
 		T saved = null;
-
-		manager.getTransaction().begin();
 		saved = manager.merge(entity);
-		manager.getTransaction().commit();
-
 		return saved;
 	}
 
 	@Override
 	public void remove(T entity) {
-		manager.getTransaction().begin();
 		manager.remove(entity);
-		manager.getTransaction().commit();
 	}
 
 	@Override

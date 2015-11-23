@@ -27,7 +27,7 @@ public class Cliente implements Serializable {
 	private String usuario;
 
 	//bi-directional many-to-one association to Pedido
-	@OneToMany(mappedBy="cliente")
+	@OneToMany(mappedBy="cliente" ,fetch = FetchType.EAGER)
 	private List<Pedido> pedidos;
 
 	public Cliente() {

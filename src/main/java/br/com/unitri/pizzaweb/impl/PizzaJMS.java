@@ -1,6 +1,7 @@
 package br.com.unitri.pizzaweb.impl;
 
 import javax.annotation.Resource;
+import javax.enterprise.context.RequestScoped;
 import javax.inject.Inject;
 import javax.inject.Named;
 import javax.jms.JMSConnectionFactory;
@@ -15,14 +16,14 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import br.com.unitri.pizzaweb.entity.Pedido;
 
 @Named
+@RequestScoped
 public class PizzaJMS {
 	
-	@Resource(mappedName = "java:/queue/pizzaQueue")
+	@Resource(mappedName = "queue/pizzaQueue")
 	private Queue pizzaQueue;
 
 	@Inject
-	@JMSConnectionFactory("java:/ConnectionFactory")
-	private JMSContext context;
+	JMSContext context;
 
 	ObjectMapper mapper;
 	
@@ -36,9 +37,13 @@ public class PizzaJMS {
 				objMessage.setObject(pedidoJson);
 				context.createProducer().send(pizzaQueue, pedidoJson);
 			} catch (JsonProcessingException e) {
+				e.printStackTrace();
+				System.out.println(e.getMessage());
 			
 			} catch (JMSException e) {
-				
+				e.printStackTrace();
+				System.out.println(e.getMessage());
+			
 			}
 	 }
 

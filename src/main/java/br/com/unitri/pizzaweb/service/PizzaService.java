@@ -29,6 +29,7 @@ public class PizzaService {
 	
 	@GET
 	@Produces(MediaType.APPLICATION_JSON)
+	@Path("/todos")
 	public List<Pizza> listAll() {
 		return pizzaDAO.getAll(Pizza.class);
 	}
@@ -48,6 +49,7 @@ public class PizzaService {
 	@POST
 	@Consumes(MediaType.APPLICATION_JSON)
 	@Produces(MediaType.APPLICATION_JSON)
+	@Path("/salvar")
 	public Response createPizza(Pizza pizza) {
 		System.out.println("Criando Pizza = " + pizza);
 		Response.ResponseBuilder builder = null;
@@ -70,6 +72,7 @@ public class PizzaService {
 	@PUT
 	@Consumes(MediaType.APPLICATION_JSON)
 	@Produces(MediaType.APPLICATION_JSON)
+	@Path("/update")
 	public Response updatePizza(Pizza pizza) {
 		System.out.println("Atualizacao de Pizza = " + pizza);
 		Response.ResponseBuilder builder = null;
@@ -91,6 +94,7 @@ public class PizzaService {
 	@DELETE
 	@Consumes(MediaType.APPLICATION_JSON)
 	@Produces(MediaType.APPLICATION_JSON)
+	@Path("/excluir")
 	public Response deletePizza(Pizza pizza) {
 		System.out.println("Delecao de Pizza = " + pizza);
 		Response.ResponseBuilder builder = null;
@@ -112,4 +116,6 @@ public class PizzaService {
 		}
 		return builder.build();
 	}
+	
+	
 }

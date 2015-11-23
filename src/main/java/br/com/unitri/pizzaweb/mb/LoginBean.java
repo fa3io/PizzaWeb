@@ -44,11 +44,11 @@ public class LoginBean implements Serializable {
 	}
 	*/
 	public String logar(){
-		Cliente cliente  = clienteDAO.getByLogin(usuario, senha);
-		if(cliente != null){
+		 usuariologin  = clienteDAO.getByLogin(usuario, senha);
+		if(usuariologin != null){
 			FacesContext fc = FacesContext.getCurrentInstance();
 			HttpSession session = (HttpSession) fc.getExternalContext().getSession(false);
-			session.setAttribute("cliente", cliente);
+			session.setAttribute("cliente", usuariologin);
 			return "menu.jsf"; 
 		}else{
 			FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_WARN, "Usuario ou senha Invalido", "Erro"));

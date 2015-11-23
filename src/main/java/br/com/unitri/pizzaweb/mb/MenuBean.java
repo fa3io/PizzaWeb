@@ -8,6 +8,7 @@ import javax.annotation.PostConstruct;
 import javax.ejb.EJB;
 import javax.enterprise.context.SessionScoped;
 import javax.faces.context.FacesContext;
+import javax.inject.Inject;
 import javax.inject.Named;
 import javax.servlet.http.HttpSession;
 
@@ -27,12 +28,12 @@ public class MenuBean implements Serializable {
 	List<Pizza> pizzas = new ArrayList<>();
 	Pizza pizza = new Pizza();
 	List<String> ingredientesSelecionados = new ArrayList<>();
-	List<Ingrediente> ingredientes = new ArrayList<>();
 
 	@EJB
 	private PizzaSessionBeanRemote pizzaSession;
 
-	PizzaJMS pizzaJMS = new PizzaJMS();
+	@Inject
+	private PizzaJMS pizzaJMS;
 
 	private Pedido pedido;
 
@@ -49,11 +50,24 @@ public class MenuBean implements Serializable {
 		setPizza(pizzas.get(codigo));
 		return "detalhe.jsf";
 	}
+	
+	public List<Ingrediente> gerarIngredientes(List<String> strIngredientes){
+		List<Ingrediente> ingredientes = new ArrayList<>();
+		Ingrediente	ingrediente; 
+		for (int i = 0; i < strIngredientes.size(); i++){
+			ingrediente = new Ingrediente();
+			ingrediente.setDescricao(strIngredientes.get(i));
+			ingredientes.add(ingrediente);
+		}
+		
+		return  ingredientes;
+	}
 
-	public void pedir() {
+	public String pedir() {
 		Cliente cliente = getUsuarioSessao();
-		pedido = montarPedido(pizza, cliente, ingredientes);
+		pedido = montarPedido(pizza, cliente, gerarIngredientes(ingredientesSelecionados));
 		pizzaJMS.solicitrPedido(pedido);
+		return "menu.jsf"; 
 	}
 
 	private Pedido montarPedido(Pizza pizza, Cliente cliente, List<Ingrediente> ingredientes) {

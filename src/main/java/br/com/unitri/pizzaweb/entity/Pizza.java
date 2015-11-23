@@ -28,7 +28,7 @@ public class Pizza implements Serializable {
 	private String imagem;
 
 	//bi-directional many-to-one association to Pedido
-	@OneToMany(mappedBy="pizza")
+	@OneToMany(mappedBy="pizza", fetch=FetchType.EAGER)
 	private List<Pedido> pedidos;
 
 	public Pizza() {

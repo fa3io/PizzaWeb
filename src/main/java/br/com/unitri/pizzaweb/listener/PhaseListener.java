@@ -3,6 +3,7 @@ package br.com.unitri.pizzaweb.listener;
 import javax.faces.context.FacesContext;
 import javax.faces.event.PhaseEvent;
 import javax.faces.event.PhaseId;
+import javax.servlet.http.HttpSession;
 
 import br.com.unitri.pizzaweb.entity.Cliente;
 import br.com.unitri.pizzaweb.mb.LoginBean;
@@ -22,7 +23,7 @@ public class PhaseListener implements javax.faces.event.PhaseListener {
             return;
         }
         LoginBean usuarioBean = (LoginBean) FacesContext.getCurrentInstance().getExternalContext().getSessionMap().get("loginBean");
-        Cliente usuarioLogado = null;
+        Cliente usuarioLogado = getUsuarioSessao();
         if (usuarioBean != null) {
             usuarioLogado = usuarioBean.getUsuariologin();
         }
@@ -36,4 +37,13 @@ public class PhaseListener implements javax.faces.event.PhaseListener {
     public PhaseId getPhaseId() {
         return PhaseId.RESTORE_VIEW;
     }
+    private Cliente getUsuarioSessao() {
+		Cliente cliente = null;
+
+		FacesContext fc = FacesContext.getCurrentInstance();
+		HttpSession session = (HttpSession) fc.getExternalContext().getSession(false);
+		cliente = (Cliente) session.getAttribute("cliente");
+		
+		return cliente;
+	}
 }

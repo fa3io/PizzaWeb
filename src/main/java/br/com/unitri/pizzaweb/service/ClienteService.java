@@ -4,6 +4,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import javax.ejb.Stateless;
 import javax.inject.Inject;
 import javax.ws.rs.Consumes;
 import javax.ws.rs.DELETE;
@@ -19,6 +20,8 @@ import javax.ws.rs.core.Response;
 import br.com.unitri.pizzaweb.dao.ClienteDAO;
 import br.com.unitri.pizzaweb.entity.Cliente;
 
+@Path("/cliente")
+@Stateless
 public class ClienteService {
 	
 	@Inject
@@ -26,6 +29,7 @@ public class ClienteService {
 	
 	@GET
 	@Produces(MediaType.APPLICATION_JSON)
+	@Path("/todos")
 	public List<Cliente> listAll() {
 		return clienteDAO.getAll(Cliente.class);
 	}
@@ -45,7 +49,8 @@ public class ClienteService {
 	@POST
 	@Consumes(MediaType.APPLICATION_JSON)
 	@Produces(MediaType.APPLICATION_JSON)
-	public Response createPizza(Cliente cliente) {
+	@Path("/salvar")
+	public Response createCliente(Cliente cliente) {
 		System.out.println("Criando Cliente = " + cliente);
 		Response.ResponseBuilder builder = null;
 		try {
@@ -67,6 +72,7 @@ public class ClienteService {
 	@PUT
 	@Consumes(MediaType.APPLICATION_JSON)
 	@Produces(MediaType.APPLICATION_JSON)
+	@Path("/update")
 	public Response updateCliente(Cliente cliente) {
 		System.out.println("Atualizacao de Cliente = " + cliente);
 		Response.ResponseBuilder builder = null;
@@ -88,7 +94,8 @@ public class ClienteService {
 	@DELETE
 	@Consumes(MediaType.APPLICATION_JSON)
 	@Produces(MediaType.APPLICATION_JSON)
-	public Response deleteContato(Cliente cliente) {
+	@Path("/excluir")
+	public Response deleteCliente(Cliente cliente) {
 		System.out.println("Delecao de cliente = " + cliente);
 		Response.ResponseBuilder builder = null;
 
